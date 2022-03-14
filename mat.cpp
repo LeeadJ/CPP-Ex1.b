@@ -7,48 +7,60 @@ namespace ariel{
         //  Need to implement error check here:
 
         //////////////////////////////////////////////////////////////////////////////
-        //Printing correct matrix:
-        char matrix[row][col];
+        // Creating the 2D vector representing the carpet:
+        vector<vector<char>> carpet(row, vector<char>(col, '0'));
+        int max_size = row*col;
+
+        // Creating the relevent boundry pointers:
         int top = 0;
         int bottom = row - 1;
         int left = 0;
         int right = col - 1;
+        char symbol = c2;
 
-        int counter = 0;
-        int matrix_size = row * col;
-        char curr = c2;
-        while(counter < matrix_size){
-            // deciding which symbol to loop"
-            if(curr==c2)
-                curr = c1;
-            else
-                curr = c1;
-                
+        // implementing the carpet vector:
+        while(carpet.size() < max_size){
+            // deciding which symbol to implement"
+            if(symbol==c2){
+                symbol = c1;
+            }
+            else{
+                symbol = c2;
+            }
+
             //adding the top row of the current loop:
-            for(int i=left; i<=right; i++){
-                matrix[top][i] = curr;
+            for(int i=left; i<=right && carpet.size() < max_size; i++){
+                carpet[top][i] = symbol;
             }
             top++; // updating the top pointer for the next loop.
 
             //adding right column of the current loop:
-            for(int i=top; i<= bottom; i++){
-                matrix[i][right] = curr;
+            for(int i=top; i<=bottom && carpet.size() < max_size; i++){
+                carpet[i][right] = symbol;
             }
             right--; // updating the right pointer for the next loop.
 
             //adding the bottom row of the current loop:
-            for(int i=right; i>=left; i++){
-                matrix[bottom][i] = curr;
+            for(int i=right; i>=left && carpet.size() < max_size; i--){
+                carpet[bottom][i];
             }
-            bottom--; //updating the bottom pointer for the next loop.
+            bottom--; // updating the bottom pointer for the next loop.
 
-            //adding the left column of the current loop.
-            for(int i=bottom; i>=top; i++){
-                matrix[left][i] = curr;
+             //adding the left column of the current loop.
+            for(int i=bottom; i>=top && carpet.size() < max_size; i--){
+                carpet[i][left] = symbol;
             }
-            left++; //updating the left pointer for the next loop.
+            left++; // updating the left pointer for the next loop.
         }
 
-        return "";
+        // implementing a string of the vector:
+        string str;
+        for(int i=0; i<row; i++){
+            for(int j=0; j<col; j++){
+                str += carpet[i][j];
+            }
+            str += '\n';
+        }
+        return str;
     }
 }
