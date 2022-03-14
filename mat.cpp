@@ -3,6 +3,8 @@
 
 namespace ariel{
     string mat(int col, int row, char c1, char c2){
+        const int maxC = 126;
+        const int minC = 33;
         //Checking for Errors:
         if(col < 0 || row < 0){
             throw runtime_error("Negative Row/Column Error!");
@@ -13,18 +15,10 @@ namespace ariel{
         if(col%2==0 || row%2==0){
             throw runtime_error("Even Row/Column Error!");
         }
-        int low = 33, high = 126;
-        if(c1 < 33 || c2 < 33 || c1 > 126 || c2 > 126){
+        if(c1 < minC || c2 < minC || (int)c1 > maxC || (int)c2 > maxC){
             throw out_of_range("c1/c2 Not in Range Error!");
         }
-        char special_char[] = {'\n','\t','\v','\b','\r','\f','\a'};
-        int s_size = sizeof(special_char)/sizeof(special_char[0]);
-        for(int i=0; i<s_size; i++){
-            if(c1==special_char[i] || c2==special_char[i]){
-                throw runtime_error("Invalid Character Error!");
-                break;
-            }
-        }
+        
 
         //////////////////////////////////////////////////////////////////////////////
         // Creating the 2D vector representing the carpet:
