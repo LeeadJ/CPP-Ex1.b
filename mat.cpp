@@ -1,10 +1,12 @@
-#include "mat.hpp"
+#include "mat.hpp" ////(mat.hpp includes: <iostream>,<string>, namespace std) 
 #include <vector>
 
 namespace ariel{
     string mat(int col, int row, char c1, char c2){
+        // Using const because of error.
         const int min = 33;
         const int max = 126;
+
         //Checking for Errors:
         if(col < 0 || row < 0){
             throw runtime_error("Negative Row/Column Error!");
@@ -21,10 +23,11 @@ namespace ariel{
         
 
         //////////////////////////////////////////////////////////////////////////////
+        // Creating the Carpet:
 
         string str;
 
-        // If row or column are 1:
+        // If row or column are 1 (shortening the code):
         if(col==1 || row==1){
             for(int i=0; i<row; i++){
                 for(int j=0; j<col; j++){
@@ -36,11 +39,13 @@ namespace ariel{
         }
         
         else{
-            // Creating the 2D vector representing the carpet (Char Vector of Char Vector):
+            // Creating the 2D vector representing the carpet (Vector of Vectors):
+            // Inititializing the inner vectors with '0' because it makes it easier to spot printing errors.
             vector<vector<char>> carpet(row, vector<char>(col, '0'));
             int max_size = row * col; // The maximum amount of elements the main vector can hold.
 
             // Creating the relevent boundry pointers:
+            //These pointers will help point to the correct place int vector.
             int top = 0;
             int bottom = row - 1;
             int left = 0;
@@ -51,6 +56,7 @@ namespace ariel{
             // implementing the carpet vector:
             // Using a while loop to fill the main Vector.
             // Stops when the counter reaches the max size.
+            // This while loop was ispired by a video I found online: https://www.youtube.com/watch?v=BdQ2AkaTgOA
             while(counter < max_size){
 
                 // deciding which symbol to implement"
@@ -76,8 +82,8 @@ namespace ariel{
                 right--; // updating the right pointer for the next loop.
 
                 //adding the bottom row of the current loop:
-                for(int i=right; i>=_LOCALE_FACETS_H; i--){
-                    carpet[bottom][i];
+                for(int i=right; i>=left; i--){
+                    carpet[bottom][i] = symbol;
                     counter++;
                 }
                 bottom--; // updating the bottom pointer for the next loop.
@@ -91,12 +97,13 @@ namespace ariel{
             }
 
             // implementing a string of the vector:
-            
+            // looping through the carpet vector and coping the elements into string str.
+            // using pop_back() to get rid of the last '\n' in str.
             for(int i=0; i<row; i++){
                 for(int j=0; j<col; j++){
                     str += carpet[i][j];
                 }
-                str += "\n";
+                str += '\n';
             }
             str.pop_back();
             
