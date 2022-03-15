@@ -3,8 +3,8 @@
 
 namespace ariel{
     string mat(int col, int row, char c1, char c2){
-        const int maxC = 126;
-        const int minC = 33;
+        const int min = 33;
+        const int max = 126;
         //Checking for Errors:
         if(col < 0 || row < 0){
             throw runtime_error("Negative Row/Column Error!");
@@ -15,38 +15,30 @@ namespace ariel{
         if(col%2==0 || row%2==0){
             throw runtime_error("Even Row/Column Error!");
         }
-        if((int)c1 < minC || (int)c2 < minC || (int)c1 > maxC || (int)c2 > maxC){
-            throw out_of_range("c1/c2 Not in Range Error!");
+        if(c1 < min || c2 < min || c1 > max || c2 > max){
+            throw out_of_range("c1/c2 Not in Range [33,126] Error!");
         }
         
 
         //////////////////////////////////////////////////////////////////////////////
+
         string str;
+
         // If row or column are 1:
         if(col==1 || row==1){
-            if(row==1){
-                for(int i=0; i<col; i++){
-                    str += c1;
-                }
-            }
-            else{
-                for(int i=0; i<row; i++){
-                    str += c1+'\n';
-                }
-                str.pop_back();
-                str.pop_back();
-            }
             for(int i=0; i<row; i++){
                 for(int j=0; j<col; j++){
                     str += c1;
                 }
                 str += '\n';
             }
+            str.pop_back();   
         }
+        
         else{
-            // Creating the 2D vector representing the carpet:
+            // Creating the 2D vector representing the carpet (Char Vector of Char Vector):
             vector<vector<char>> carpet(row, vector<char>(col, '0'));
-            int max_size = row*col;
+            int max_size = row * col; // The maximum amount of elements the main vector can hold.
 
             // Creating the relevent boundry pointers:
             int top = 0;
@@ -54,9 +46,13 @@ namespace ariel{
             int left = 0;
             int right = col - 1;
             char symbol = c2;
+            int counter = 0;
 
             // implementing the carpet vector:
-            while(carpet.size() < max_size){
+            // Using a while loop to fill the main Vector.
+            // Stops when the counter reaches the max size.
+            while(counter < max_size){
+
                 // deciding which symbol to implement"
                 if(symbol==c2){
                     symbol = c1;
@@ -66,26 +62,30 @@ namespace ariel{
                 }
 
                 //adding the top row of the current loop:
-                for(int i=left; i<=right && carpet.size() < max_size; i++){
+                for(int i=left; i<=right; i++){
                     carpet[top][i] = symbol;
+                    counter++;
                 }
                 top++; // updating the top pointer for the next loop.
 
                 //adding right column of the current loop:
-                for(int i=top; i<=bottom && carpet.size() < max_size; i++){
+                for(int i=top; i<=bottom; i++){
                     carpet[i][right] = symbol;
+                    counter++;
                 }
                 right--; // updating the right pointer for the next loop.
 
                 //adding the bottom row of the current loop:
-                for(int i=right; i>=left && carpet.size() < max_size; i--){
+                for(int i=right; i>=_LOCALE_FACETS_H; i--){
                     carpet[bottom][i];
+                    counter++;
                 }
                 bottom--; // updating the bottom pointer for the next loop.
 
                 //adding the left column of the current loop.
-                for(int i=bottom; i>=top && carpet.size() < max_size; i--){
+                for(int i=bottom; i>=top; i--){
                     carpet[i][left] = symbol;
+                    counter++;
                 }
                 left++; // updating the left pointer for the next loop.
             }
@@ -96,10 +96,10 @@ namespace ariel{
                 for(int j=0; j<col; j++){
                     str += carpet[i][j];
                 }
-                str += '\n';
+                str += "\n";
             }
             str.pop_back();
-            // str.pop_back();
+            
         }
         return str;
     }
