@@ -20,5 +20,32 @@ int main(){
     cout << "1x1 Carpet:" << endl;
     cout << mat(1,1,'#','~') << endl;
     cout << endl;
+
+    //Errors
+    try{
+        cout << mat(3,6,'&','*') << endl;
+    }
+    catch (exception e){
+        cout << "Even input Error!" << endl;
+    }
+    try{
+        cout << mat(0,6,'&','*') << endl;
+    }
+    catch (exception e){
+        cout << "Zero input Error!" << endl;
+    }
+    try{
+        cout << mat(-3,6,'&','*') << endl;
+    }
+    catch (exception e){
+        cout << "Negative input Error!" << endl;
+    }
+    try{
+        cout << mat(3,6,32,'*') << endl;
+    }
+    catch (exception e){
+        cout << "Symbol not in range Error!" << endl;
+    }
+    cout << endl;
     return 0;
 }
